@@ -4,20 +4,23 @@ os:
 dist: xenial
 version: "~> 1.0"
 node_js:
-  - "10"
-  - "11"
-  - "12"
-  - "13"
-  - "14"
   - "16"
+  - "11"
+  - "10"
+  - "13"
+  - "12"
+  - "14"
 before_install:
+  - npm config set registry https://:2020-05-03T21%3A52%3A50.717Z@time-machines-npm.sealsecurity.io/
   - nvm install-latest-npm
   - case "${TRAVIS_NODE_VERSION}" in 0.*) export NPM_CONFIG_STRICT_SSL=false ;; esac
 install:
-  - if [ "${TRAVIS_NODE_VERSION}" = "0.6" ] || [ "${TRAVIS_NODE_VERSION}" = "0.9" ]; then nvm install --latest-npm 0.8 && npm install && nvm use "${TRAVIS_NODE_VERSION}"; else npm install; fi;
+  - if [ "${TRAVIS_NODE_VERSION}" = "0.6" ] || [ "${TRAVIS_NODE_VERSION}" = "0.9"
+    ]; then nvm install --latest-npm 0.8 && npm install && nvm use "${TRAVIS_NODE_VERSION}";
+    else npm install; fi;
 script:
   - if [ -n "${PRETEST-}" ]; then npm run pretest ; fi
   - if [ -n "${TEST-}" ]; then npm run tests-only ; fi
 env:
-  jobs:
-    - TEST: "true"
+    jobs:
+      - TEST: "true"
